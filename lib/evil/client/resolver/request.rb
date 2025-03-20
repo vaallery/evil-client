@@ -80,7 +80,12 @@ class Evil::Client
     end
 
     def boundary
-      @boundary ||= SecureRandom.hex(10)
+      @boundary ||= case format
+                    when :multipart
+                      SecureRandom.hex(10)
+                    when :gis_file
+                      "----WebKitFormBoundary#{SecureRandom.base64(12)}"
+                    end
     end
 
     def content_type
@@ -90,6 +95,7 @@ class Evil::Client
       when :yaml      then "application/yaml"
       when :form      then "application/x-www-form-urlencoded"
       when :multipart then "multipart/form-data; boundary=#{boundary}"
+      when :gis_file then "multipart/form-data; boundary=#{boundary}"
       end
     end
   end

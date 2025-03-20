@@ -11,7 +11,7 @@ class Evil::Client
     def call
       request    = Resolver::Request.call(schema, settings)
       middleware = Resolver::Middleware.call(schema, settings)
-      connection = schema.client.connection
+      connection = schema.client.connection(settings)
       stack      = middleware.inject(connection) { |app, layer| layer.new app }
       response   = stack.call request
 

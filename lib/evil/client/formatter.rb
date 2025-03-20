@@ -7,6 +7,7 @@ class Evil::Client
     require_relative "formatter/text"
     require_relative "formatter/form"
     require_relative "formatter/multipart"
+    require_relative "formatter/gis_file"
 
     # Factory that knows how to format source depending on given format
     #
@@ -21,8 +22,9 @@ class Evil::Client
       return to_yaml(source) if format == :yaml
       return to_form(source) if format == :form
       return to_text(source) if format == :text
+      return to_multipart(source, **opts) if format == :multipart
 
-      to_multipart(source, **opts)
+      to_gisfile(source, **opts)
     end
 
     private
@@ -45,6 +47,10 @@ class Evil::Client
 
     def to_multipart(source, **opts)
       Multipart.call [source], **opts
+    end
+
+    def to_gisfile(source, **opts)
+      GisFile.call [source], **opts
     end
   end
 end

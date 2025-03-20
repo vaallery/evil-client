@@ -3,7 +3,7 @@ module Evil::Client::Formatter
   # Utility module to format file (IO) as a part of multipart body
   #
   # @example
-  #   Evil::Client::Formatter::Form.call foo: { bar: :baz }
+  #   Evil::Client::Formatter::GisFile.call File.open(path)
   #   # => "foo[bar]=baz"
   #
   module Multipart
